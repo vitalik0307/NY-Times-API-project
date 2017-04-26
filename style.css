@@ -1,5 +1,12 @@
 
-
+html {
+    position: relative;
+    min-height: 100%;
+    background: black;
+}
+body{
+	margin: 0 0 100px;
+}
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,700,700i');
 .header-wrapper{
 	height: 50vh;
@@ -19,6 +26,7 @@
 }
 #myList{
 	border:1px solid white;
+	border-radius: 0px;
 	background: white;
 	width: 100%;
 }
@@ -42,8 +50,10 @@
 	font-family:"Open Sans", sans-serif;
 }
 .footer-wrapper{
+	position:absolute;
+	bottom:0;
 	width: 100%;
-	height: 20vh;
+	height: 100px;
 	background: black;
 	color:#c2c2c2;
 	font-family: "Open Sans", sans-serif;
@@ -53,7 +63,7 @@
 }
 @media (min-width: 600px) and (max-width: 1000px) {
 	.header-wrapper{
-		height:18vh;
+		height:20vh;
 		flex-direction: row;
 		justify-content: flex-start;
 	}
@@ -62,19 +72,16 @@
 		height: 12vh;
 		margin-left: 15%;
 	}
-	#div1{
+	#sectionsWrapper{
 		display: flex;
 		justify-content: flex-start;
 		flex-wrap: wrap;
+		background: black;
 	}
 	.postWrapper{
 		width: 33.33%;
-		height: 40vh;
+		height: 320px;
 	}
-	.footer-wrapper{
-		height: 10vh;
-	}
-
 }
 @media (min-width: 1001px) {
 		.header-wrapper{
@@ -87,7 +94,7 @@
 		height: 12vh;
 		margin-left: 15%;
 	}
-	#div1{
+	#sectionsWrapper{
 		display: flex;
 		justify-content: flex-start;
 		flex-wrap: wrap;
@@ -96,8 +103,4 @@
 		width: 25%;
 		height: 55vh;
 	}
-	.footer-wrapper{
-		height: 10vh;
-	}
-	
 }

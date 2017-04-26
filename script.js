@@ -1,7 +1,9 @@
-
+$(document).ready(function(){
+  $("#myList").heapbox();
+});
 window.addEventListener("load",function(){
-	var url = "https://api.nytimes.com/svc/topstories/v2/home.json" + '?' + $.param({'api-key': "740f26efb11c408fb3a66ea3ea9fd2ae"});
-	fetch(url)  
+  var url = "https://api.nytimes.com/svc/topstories/v2/home.json" + '?' + $.param({'api-key': "740f26efb11c408fb3a66ea3ea9fd2ae"});
+  fetch(url)  
   .then(  
     function(response) {  
       if (response.status !== 200) {  
@@ -42,7 +44,7 @@ function category(data){
 }
 
 function renderHTML(data,elementClicked){
-  var myDiv = document.getElementById("div1");
+  var myDiv = document.getElementById("sectionsWrapper");
   myDiv.innerHTML = "";
   var posts =[];
   for(i=0; i < data.length; i++){
@@ -79,24 +81,19 @@ function renderHTML(data,elementClicked){
 }
 
 function loadStories(data){
-  var myDiv = document.getElementById("div1");
+  var myDiv = document.getElementById("sectionsWrapper");
+  // var dataIm = data.filter(x => x.multimedia[4]);
+  var dataIm = data.filter(function (x){
+    return x.multimedia[4];
+  });
   var posts =[];
-  for(i=0; i < data.length; i++){
-    var post = data[i];
+  for(i=0; i < dataIm.length; i++){
+    var post = dataIm[i];
     posts.push(post);
   }
-  var slicedPosts = posts.slice(0, 12);
-  slicedPosts.forEach(function(slicedPost){
-    
-    function deletePost (slicedPost){
-        return slicedPost.slice(0,1);
-      };
-     var img ="default.jpg";
-  if(slicedPost.multimedia[4]){
-      img = slicedPost.multimedia[4].url;
-    }else{
-      // deletePost(slicedPost);
-    }
+    var slicedPosts = posts.slice(0, 12);
+    slicedPosts.forEach(function(slicedPost){
+    var img = slicedPost.multimedia[4].url;
     var postWrapper = document.createElement("div");
     postWrapper.setAttribute("class","postWrapper");
     postWrapper.style.background = "url('" + img + "')";
@@ -110,6 +107,7 @@ function loadStories(data){
     });
   });
 }
+
   
 
 
