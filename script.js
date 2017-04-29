@@ -1,6 +1,4 @@
-$(document).ready(function(){
-  $("#myList").heapbox();
-});
+
 window.addEventListener("load",function(){
   var url = "https://api.nytimes.com/svc/topstories/v2/home.json" + '?' + $.param({'api-key': "740f26efb11c408fb3a66ea3ea9fd2ae"});
   fetch(url)  
@@ -25,11 +23,14 @@ window.addEventListener("load",function(){
 
 function category(data){
   // console.log(data);
+  var myList = document.getElementById("myList");
   const section = data.map(x=> x.section);
   const filteredSection = section.reduce((acc,val) => {
     return(acc.includes(val)) ? acc : acc.concat(val);
   },[]);
-  var myList = document.getElementById("myList");
+   var allNews = "All News";
+  filteredSection.unshift(allNews);
+  // console.log(filteredSection);
   myList.addEventListener("change",function(e){
     var elementClicked = event.target.selectedOptions[0].id;
     renderHTML(data,elementClicked);
@@ -46,26 +47,25 @@ function category(data){
 function renderHTML(data,elementClicked){
   var myDiv = document.getElementById("sectionsWrapper");
   myDiv.innerHTML = "";
+  var dataIm = data.filter(function (x){
+    return x.multimedia[4];
+  });
   var posts =[];
-  for(i=0; i < data.length; i++){
-    var post = data[i];
+  for(i=0; i < dataIm.length; i++){
+    var post = dataIm[i];
     posts.push(post);
   }
   var elementClicked = elementClicked;
+
   var filteredPosts = posts.filter(function(post){
+    if(elementClicked === "All News"){
+      return post;
+    }else{
       return post.section === elementClicked;
+    }
     });
   filteredPosts.forEach(function(filteredPost){
-    function deletePost (filteredPost){
-        return filteredPost.slice(0,1);
-      };
-      var img ="default.jpg";
-    if(filteredPost.multimedia[4]){
-      img = filteredPost.multimedia[4].url;
-    }else{
-
-      deletePost(filteredPost);
-    }
+    img = filteredPost.multimedia[4].url;
     var postWrapper = document.createElement("div");
     postWrapper.setAttribute("class","postWrapper");
     postWrapper.style.background = "url('" + img + "')";
@@ -82,7 +82,6 @@ function renderHTML(data,elementClicked){
 
 function loadStories(data){
   var myDiv = document.getElementById("sectionsWrapper");
-  // var dataIm = data.filter(x => x.multimedia[4]);
   var dataIm = data.filter(function (x){
     return x.multimedia[4];
   });
