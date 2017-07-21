@@ -22,12 +22,18 @@ window.addEventListener("load",function(){
 });
 
 function category(data){
-  // console.log(data);
   var myList = document.getElementById("myList");
   const section = data.map(x=> x.section);
-  const filteredSection = section.reduce((acc,val) => {
-    return(acc.includes(val)) ? acc : acc.concat(val);
-  },[]);
+  const filteredSection = sectionFilter(section);
+  function sectionFilter(arr){
+    let noDuplicatesArr = [];
+    for(let i=0; i<arr.length; i++){
+      if(!noDuplicatesArr.includes(arr[i])){
+        noDuplicatesArr.push(arr[i]);
+      }
+    }
+    return noDuplicatesArr;
+  };
    var allNews = "All News";
   filteredSection.unshift(allNews);
   // console.log(filteredSection);
